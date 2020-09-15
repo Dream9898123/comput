@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.demo.dao.IPbBeanDao">
+
+    <!-- 配置 pbBean -->
+    <resultMap id="pbBeanMap" type="pbBean">
+        <!-- 主键字段的对应 -->
+        <id property="id" column="id"></id>
+        <!--非主键字段的对应-->
+        <result property="conpanyid" column="conpanyid"></result>
+        <result property="conpanyname" column="conpanyname"></result>
+        <result property="peibi" column="peibi"></result>
+        <result property="summoney" column="summoney"></result>
+    </resultMap>
+
+    <!-- 配置 PeiBiMuLu -->
+    <resultMap id="PeiBiMuLuMap" type="PeiBiMuLu">
+        <!-- 主键字段的对应 -->
+        <id property="id" column="id"></id>
+        <!--非主键字段的对应-->
+        <result property="PeiBiMingZi" column="peiBiMingZi"></result>
+    </resultMap>
+
+    <!-- 配置 PeibiBiao -->
+    <resultMap id="PeibiBiaoMap" type="PeibiBiao">
+        <id property="id" column="id"></id>
+        <result property="conpanyid" column="conpanyid"></result>
+        <result property="conpanyname" column="conpanyname"></result>
+        <result property="peibi" column="peibi"></result>
+        <result property="summoney" column="summoney"></result>
+        <result property="na" column="na"></result>
+        <result property="ga" column="ga"></result>
+        <result property="v" column="v"></result>
+        <result property="fe" column="fe"></result>
+        <result property="s" column="s"></result>
+        <result property="shihui" column="shihui"></result>
+        <result property="huifafeng" column="huifafeng"></result>
+        <result property="fenShuId" column="fenShuId"></result>
+    </resultMap>
+
+
+    <!-- 配置 testbean -->
+<!--    <resultMap id="testbeanMap" type="testbean">-->
+<!--        <id property="id"></id>-->
+<!--        <result property="na"></result>-->
+<!--        <result property="ga"></result>-->
+<!--        <result property="v"></result>-->
+<!--        <result property="fe"></result>-->
+<!--        <result property="s"></result>-->
+<!--        <result property="shihui"></result>-->
+<!--        <result property="huifafeng"></result>-->
+<!--        <result property="fenShuId"></result>-->
+<!--        <result property="conpanyid"></result>-->
+<!--        <result property="conpanyname"></result>-->
+<!--        <result property="peibi"></result>-->
+<!--        <result property="money"></result>-->
+<!--    </resultMap>-->
+
+    <!-- 保存 -->
+    <insert id="insert" parameterType="pbBean">
+        <!-- 配置插入操作后，获取插入数据的id -->
+        <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into pbBean(conpanyid,conpanyname,peibi,summoney)values(#{conpanyid},#{conpanyname},#{peibi},#{summoney});
+    </insert>
+
+<!--    更新用户-->
+    <update id="update" parameterType="pbBean">
+            update pbBean set conpanyid=#{conpanyid},conpanyname=#{conpanyname},peibi=#{peibi},summoney=#{summoney} where id=#{id}
+    </update>
+
+<!--    清空pb表-->
+    <update id="truncateTable">
+        truncate table pbBean
+    </update>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from pbBean where id = #{id}
+    </delete>
+
+    <!-- 查询所有 -->
+    <select id="getAllList" resultMap="pbBeanMap">
+        <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
+        select * from pbBean order by summoney;
+    </select>
+
+    <!-- 根据id查询 -->
+    <select id="getPbById" parameterType="INT" resultMap="pbBeanMap">
+        select * from pbBean where id = #{id}
+    </select>
+
+
+    <!-- 保存 -->
+    <insert id="chaRuBiaoDanMuLu" parameterType="PeiBiMuLu">
+        <!-- 配置插入操作后，获取插入数据的id -->
+        <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into PeiBiMuLu(peiBiMingZi)values(#{PeiBiMingZi});
+    </insert>
+
+    <!-- 根据名称查询 -->
+    <select id="getMuLu" parameterType="string" resultMap="PeiBiMuLuMap">
+        select * from PeiBiMuLu where peiBiMingZi = #{PeiBiMingZi}
+        <!-- select * from user where username like '%${value}%'-->
+    </select>
+
+    <!-- 根据id查询 -->
+    <select id="getPeiBiMuLuById" parameterType="INT" resultMap="PeiBiMuLuMap">
+        select * from PeiBiMuLu where id = #{id}
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="getMuLulist" resultMap="PeiBiMuLuMap">
+        <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
+        select * from PeiBiMuLu;
+    </select>
+
+
+    <!-- 保存 -->
+    <insert id="chaRuPeiBiBiao" parameterType="PeibiBiao">
+                <!-- 配置插入操作后，获取插入数据的id -->
+                <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+                    select last_insert_id();
+                </selectKey>
+        insert into PeibiBiao(conpanyid,conpanyname,peibi,summoney,na,ga,v,fe,s,shihui,huifafeng,fenShuId)
+            values(#{conpanyid},#{conpanyname},#{peibi},#{summoney},#{na},#{ga},#{v},#{fe},#{s},#{shihui},#{huifafeng},#{fenShuId});
+    </insert>
+
+    <!-- 查询所有 -->
+    <select id="getPeiBiBiao" resultMap="PeibiBiaoMap">
+        <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
+        select * from PeibiBiao where na &lt;= #{testbean.na} and ga &lt;= #{testbean.ga} and v &lt;= #{testbean.v} and fe &lt;= #{testbean.fe} and s &lt;= #{testbean.s} and shihui &lt;= #{testbean.shihui} and huifafeng &lt;= #{testbean.huifafeng} and fenShuId = #{biaoDan_id} order by summoney;
+    </select>
+
+    <!-- 根据id查询 -->
+    <select id="getPeiBiBiaoById" parameterType="INT" resultMap="PeibiBiaoMap">
+        select * from PeibiBiao where id = #{id}
+    </select>
+
+    <!-- 删除peibimulu-->
+    <delete id="deletePeiBiMuLuById" parameterType="java.lang.Integer">
+        delete from PeiBiMuLu where id = #{id}
+    </delete>
+
+    <!-- 删除peibibiao-->
+    <delete id="deletePeibiBiaoByfenshuId" parameterType="String">
+        delete from PeibiBiao where fenShuId = #{fenShuId}
+    </delete>
+
+
+</mapper>

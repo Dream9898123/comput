@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- 连接数据库 -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/demo?useUnicode=true&amp;characterEncoding=utf-8</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">123456</property>
+		<!-- 其他配置 -->
+		<!-- 指定方言 -->
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		<!-- 显示SQL语句 -->
+		<property name="hibernate.show_sql">true</property>
+		<!-- 格式化SQL语句 -->
+		<property name="format_sql">true</property>
+		<!-- 自动建表 -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- 用来关联hbm配置文件 -->
+		<mapping class="cn.demo.bean.ShopBean"/>
+		<mapping class="cn.demo.bean.pbBean"/>
+		<mapping class="cn.demo.bean.PeibiBiao"/>
+		<mapping class="cn.demo.bean.PeiBiMuLu"/>
+<!--		<mapping resource="cn/demo/bean/ShopBean.hbm.xml"/>-->
+<!--		<mapping resource="cn/demo/bean/pbBean.hbm.xml"/>-->
+<!--		<mapping resource="cn/demo/bean/PeibiBiao.hbm.xml"/>-->
+<!--		<mapping resource="cn/demo/bean/PeiBiMuLu.hbm.xml"/>-->
+	</session-factory>
+</hibernate-configuration>

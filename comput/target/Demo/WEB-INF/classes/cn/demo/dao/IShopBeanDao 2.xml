@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.demo.dao.IShopBeanDao">
+
+    <!-- 配置 查询结果的列名和实体类的属性名的对应关系 -->
+    <resultMap id="ShopBeanMap" type="ShopBean">
+        <!-- 主键字段的对应 -->
+        <id property="id" column="id"></id>
+        <!--非主键字段的对应-->
+        <result property="companyName" column="companyName"></result>
+        <result property="Na" column="Na"></result>
+        <result property="Ga" column="Ga"></result>
+        <result property="V" column="V"></result>
+        <result property="Fe" column="Fe"></result>
+        <result property="S" column="S"></result>
+        <result property="shihui" column="shihui"></result>
+        <result property="huifafeng" column="huifafeng"></result>
+        <result property="money" column="money"></result>
+    </resultMap>
+
+    <!-- 查询所有 -->
+    <select id="getAllList" resultMap="ShopBeanMap">
+        <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
+        select * from shopbean order by id;
+    </select>
+    <!-- 删除-->
+    <delete id="deleteShopBean" parameterType="java.lang.Integer">
+        delete from shopbean where id = #{id}
+    </delete>
+    <!-- 根据id查询用户 -->
+    <select id="getShopById" parameterType="INT" resultMap="ShopBeanMap">
+        select * from shopbean where id = #{id}
+    </select>
+</mapper>
